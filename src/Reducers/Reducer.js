@@ -2,6 +2,9 @@ import { BEER_LIST_COLUMN } from "../Actions/Type"
 
 const initialState = {
     column: [
+        {title: 'Beer', field: 'image_url', render: rowData => (
+            <img style = {{ height: 36, width: 25}} src = {rowData.image_url} />
+        )},
         {title: 'Id', field: 'id'},
         {title: 'BeerName', field: 'name'},
         {title: 'ABV', field: 'abv'},
