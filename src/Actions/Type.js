@@ -1,0 +1,1 @@
+export const BEER_LIST_COLUMN = 'BEER_LIST_COLUMN'
