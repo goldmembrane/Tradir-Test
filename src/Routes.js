@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Home from "./Pages/Home";
-import Beerlist from "./Pages/Beerlist";
+import BeerContainer from "./Pages/BeerContainer";
 // import ReactGA from "react-ga";
 
 const Routes = () => {
@@ -15,7 +15,7 @@ const Routes = () => {
     <Router>
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path='/beerlist' component={Beerlist} />
+          <Route path='/beerlist' component={BeerContainer} />
           <Route path = '*'>
             <Redirect to = '/home'/>
           </Route>

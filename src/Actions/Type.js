@@ -1,0 +1,4 @@
+export default {
+    CHANGE_PAGE: 'BEER/CHANGE_PAGE',
+    CHANGE_PAGE_SIZE: 'BEER/CHANGE_PAGE_SIZE'
+}
