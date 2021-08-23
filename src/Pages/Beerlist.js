@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
+import axios from 'axios'
 
 const Beerlist = () => {
 
+    const [data, setData] = useState([])
+
+    const getData = async() => {
+      await axios.get('https://api.punkapi.com/v2/beers')
+              .then(response => {
+                setData(response.data)
+              })
+    }
+
+    useEffect(() => {
+      getData()
+    },[])
+
     return (
         <div>
-            <MaterialTable
+          <MaterialTable
             columns = {[
                 { title: 'Beer', field: 'image_url',
                     render: rowData => (
@@ -17,27 +31,8 @@ const Beerlist = () => {
                 { title: 'Abv', field: 'abv'},
                 { title: 'Tagline', field: 'tagline'},
             ]}
-            data = {query =>
-            new Promise((resolve, reject) => {
-                let url = 'https://api.punkapi.com/v2/beers'
-                fetch(url)
-                .then((response) => response.json())
-                .then((result) => {
-                    resolve({
-                        data: result
-                    })
-                })
-            })}
+            data = {data}
             title = 'demo title'
-            localization={{
-                pagination : {
-                    labelDisplayedRows: '1-5 of 25',
-                    labelRowsPerPage: '{5, 10, 25, 100}'
-                }
-            }}
-            options = {{
-                pageSizeOptions : [5, 10, 20]
-            }}
             />
         </div>
     )
