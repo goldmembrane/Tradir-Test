@@ -35,19 +35,61 @@ const Beerlist = (props) => {
 
     const newColumn = useSelector(state => state.Reducer.column)
 
+
+    const [firstInput, setFirstInput] = useState(0)
+    const [lastInput, setLastInput] = useState(0)
+    const [filter, setFilter] = useState({
+      min: 0,
+      max: 0,
+    })
+
+    const changeFirstInput = (e) => {
+      setFirstInput(e.target.value)
+    }
+
+    const changeLastInput = (e) => {
+      setLastInput(e.target.value)
+    }
+
+    const handleFilter = () => {
+        setFilter({
+          min: firstInput,
+          max: lastInput
+        })
+    }
+
+    const [filteredData, setFilteredData] = useState([]);
+
+    const filteredBeer = data.filter((beer) => firstInput <= beer.abv && lastInput >= beer.abv)
+
+    const changeToFiltered = () => {
+      setFilteredData(filteredData.concat(...filteredBeer))
+    }
+
+    const resetFilter = () => {
+      setFilter({
+        min: 0,
+        max: 0,
+      })
+    }
+
     useEffect(() => {
       getData()
     },[])
 
     return (
         <div>
+          <div>
+            <input type = 'number' onChange = {changeFirstInput}/> - <input type = 'number' onChange = {changeLastInput}/>
+            <button onClick = {() => {handleFilter(); changeToFiltered(); console.log(filteredData)}}>설정</button>
+          </div>
           <MaterialTable
             columns = {newColumn}
-            data = {data}
+            data = {filter.min.length ? filteredData : data}
             title = 'demo title'
             onColumnDragged = {handleColumnDrag}
             />
-          <button onClick = {() => {dispatch(saveColumns(columns)); props.history.push('/home')}}>홈으로</button>
+          <button onClick = {() => {dispatch(saveColumns(columns)); resetFilter(); props.history.push('/home')}}>홈으로</button>
         </div>
     )
 }
